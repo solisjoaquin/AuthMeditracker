@@ -125,6 +125,17 @@ public class RegisterPatient extends AppCompatActivity {
         });
     }
 
+    /*
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAuth.getCurrentUser() != null){
+            startActivity(new Intent(RegisterPatient.this, ProfilePatientActivity.class));
+            finish();
+        }
+    } */
+
 
 
 

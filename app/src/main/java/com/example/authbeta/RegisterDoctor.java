@@ -88,7 +88,7 @@ public class RegisterDoctor extends AppCompatActivity {
         mToLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterDoctor.this, LoginUser.class));
+                startActivity(new Intent(RegisterDoctor.this, LoginDoctor.class));
             }
         });
     }
@@ -116,7 +116,7 @@ public class RegisterDoctor extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task2) {
                                     if (task2.isSuccessful()) {
 
-                                        startActivity(new Intent(RegisterDoctor.this, ProfilePatientActivity.class));
+                                        startActivity(new Intent(RegisterDoctor.this, ProfileDoctorActivity.class));
                                         finish();
                                     }
 
