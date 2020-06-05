@@ -1,6 +1,6 @@
 ## This repository contains the authentication process with Firebase
 
-It's important to connect with Firebase first. You need to log in with a google account at the right top. 
+To start using Firebase you need to log in with a google account at the right top. 
 
 To connect with Firebase: TOOLS --> FIREBASE.
 
