@@ -22,10 +22,13 @@ import java.util.Map;
 
 public class RegisterDoctor extends AppCompatActivity {
 
+    //These variables are 4 EditText (Name, Hospital, Email, Password) and 2 button (Register, Login)
     private EditText mRegisterName, mRegisterEmail, mRegisterPsssword, mRegisterHospital;
     private Button mRegisterBtn, mToLoginButton;
 
+    // This is the first step for Authentication for Firebase
     private FirebaseAuth mAuth;
+    // This is the first step to work with the database
     private DatabaseReference mDatatabe;
 
     private String name = "";
@@ -37,6 +40,8 @@ public class RegisterDoctor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_doctor);
+
+        // connect elements (editText, button) with their variables
 
         mRegisterName = (EditText) findViewById(R.id.editTextRegisterName);
         mRegisterHospital = (EditText) findViewById(R.id.editTextHospital);
