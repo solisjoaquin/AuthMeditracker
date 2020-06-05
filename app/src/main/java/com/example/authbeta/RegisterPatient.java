@@ -32,6 +32,7 @@ public class RegisterPatient extends AppCompatActivity {
     private String email  = "";
     private String password = "";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
