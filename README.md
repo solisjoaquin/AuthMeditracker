@@ -1,4 +1,4 @@
-## This repository contains the authentication process with Firebase :smile:
+## This repository contains the authentication process with Firebase :grinning:
 
 To start using Firebase you need to log in with a google account at the right top. 
 
