@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+//this is a new comment
 public class LoginUser extends AppCompatActivity {
 
     private Button mLoginUserBtn;
