@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginDoctor extends AppCompatActivity {
 
-    private Button mLoginUserBtn;
     private EditText mLoginEmail, mLoginPassword;
 
     private String email  = "";
@@ -34,7 +33,7 @@ public class LoginDoctor extends AppCompatActivity {
 
         mLoginEmail = (EditText) findViewById(R.id.editTextLoginEmail);
         mLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-        mLoginUserBtn = (Button) findViewById(R.id.loginButton);
+        Button mLoginUserBtn = (Button) findViewById(R.id.loginButton);
 
         mLoginUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override

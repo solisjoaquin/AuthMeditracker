@@ -24,7 +24,7 @@ public class RegisterDoctor extends AppCompatActivity {
 
     //These variables are 4 EditText (Name, Hospital, Email, Password) and 2 button (Register, Login)
     private EditText mRegisterName, mRegisterEmail, mRegisterPsssword, mRegisterHospital;
-    private Button mRegisterBtn, mToLoginButton;
+    private Button mRegisterBtn;
 
     // This is the first step for Authentication for Firebase
     private FirebaseAuth mAuth;
@@ -49,7 +49,7 @@ public class RegisterDoctor extends AppCompatActivity {
         mRegisterPsssword = (EditText) findViewById(R.id.editTextRegisterPassword);
 
         mRegisterBtn = (Button) findViewById(R.id.registerBtn);
-        mToLoginButton = (Button) findViewById(R.id.toLoginBtn);
+        Button mToLoginButton = (Button) findViewById(R.id.toLoginBtn);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();

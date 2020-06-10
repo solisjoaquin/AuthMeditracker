@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileDoctorActivity extends AppCompatActivity {
 
     private TextView mUserName, mUserEmail, mHospital;
-    private Button mSignOutBtn;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -35,7 +34,7 @@ public class ProfileDoctorActivity extends AppCompatActivity {
         mHospital = (TextView) findViewById(R.id.hospitalName);
         mUserName = (TextView) findViewById(R.id.textViewNameProfile);
         mUserEmail= (TextView) findViewById(R.id.textViewEmailProfile);
-        mSignOutBtn = (Button) findViewById(R.id.btnLogOut);
+        Button mSignOutBtn = (Button) findViewById(R.id.btnLogOut);
 
         mSignOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

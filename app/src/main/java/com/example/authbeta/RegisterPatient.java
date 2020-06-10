@@ -26,7 +26,7 @@ public class RegisterPatient extends AppCompatActivity {
     private DatabaseReference mDatatabe;
 
     private EditText mRegisterName, mRegisterEmail, mRegisterPsssword;
-    private Button mRegisterBtn, mToLoginButton;
+    private Button mToLoginButton;
 
     private String name = "";
     private String email  = "";
@@ -42,7 +42,7 @@ public class RegisterPatient extends AppCompatActivity {
         mRegisterEmail = (EditText) findViewById(R.id.editTextRegisterEmail);
         mRegisterPsssword = (EditText) findViewById(R.id.editTextRegisterPassword);
 
-        mRegisterBtn = (Button) findViewById(R.id.registerBtn);
+        Button mRegisterBtn = (Button) findViewById(R.id.registerBtn);
         mToLoginButton = (Button) findViewById(R.id.toLoginBtn);
 
         // Initialize Firebase Auth
