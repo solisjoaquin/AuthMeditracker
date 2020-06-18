@@ -37,6 +37,15 @@
         android:layout_marginTop="10dp"
         android:hint="password"/>
 
+    <CheckBox
+        android:id="@+id/editCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextRegisterPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Remember my login information" />
+
 
 
     <LinearLayout

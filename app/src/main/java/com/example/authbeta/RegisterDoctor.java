@@ -3,9 +3,12 @@ package com.example.authbeta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +28,13 @@ public class RegisterDoctor extends AppCompatActivity {
     private EditText mRegisterPassword = (EditText) findViewById(R.id.editTextRegisterPassword);
     private EditText mRegisterHospital = (EditText) findViewById(R.id.editTextHospital);
 
+    // Declare Shared Preferences.
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedEditor;
+
+    // Declare Checkbox.
+    private CheckBox mCheckBox = (CheckBox) findViewById(R.id.editCheckBox);
+
     // Declare Button variables.
     private Button mRegisterBtn = (Button) findViewById(R.id.registerBtn);
     private Button mToLoginButton = (Button) findViewById(R.id.toLoginBtn);
@@ -36,10 +46,10 @@ public class RegisterDoctor extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     // Declare String variables.
-    private String name;
-    private String hospital;
-    private String email;
-    private String password;
+    private String mName;
+    private String mHospital;
+    private String mEmail;
+    private String mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +66,14 @@ public class RegisterDoctor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                name = mRegisterName.getText().toString();
-                hospital = mRegisterHospital.getText().toString();
-                email = mRegisterEmail.getText().toString();
-                password = mRegisterPassword.getText().toString();
+                mName = mRegisterName.getText().toString();
+                mHospital = mRegisterHospital.getText().toString();
+                mEmail = mRegisterEmail.getText().toString();
+                mPassword = mRegisterPassword.getText().toString();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !hospital.isEmpty()){
+                if (!mName.isEmpty() && !mEmail.isEmpty() && !mPassword.isEmpty() && !mHospital.isEmpty()){
 
-                    if (password.length() >= 6){
+                    if (mPassword.length() >= 6){
 
                         registerUser();
 
@@ -86,10 +96,57 @@ public class RegisterDoctor extends AppCompatActivity {
                 startActivity(new Intent(RegisterDoctor.this, LoginDoctor.class));
             }
         });
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedEditor = sharedPref.edit();
+
+        checkSharedPreferences();
+
+        mToLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCheckBox.isChecked()) {
+                    sharedEditor.putString(getString(R.string.checkbox), "True");
+                    sharedEditor.commit();
+
+                    String name = mRegisterName.getText().toString();
+                    sharedEditor.putString(getString(R.string.name), name);
+                    sharedEditor.commit();
+
+                    String password = mRegisterPassword.getText().toString();
+                    sharedEditor.putString(getString(R.string.password), password);
+                    sharedEditor.commit();
+                } else {
+                    sharedEditor.putString(getString(R.string.checkbox), "False");
+                    sharedEditor.commit();
+
+                    sharedEditor.putString(getString(R.string.name), "");
+                    sharedEditor.commit();
+
+                    sharedEditor.putString(getString(R.string.password), "");
+                    sharedEditor.commit();
+                }
+            }
+        });
+    }
+
+    private void checkSharedPreferences() {
+        String checkbox = sharedPref.getString(getString(R.string.checkbox), "false");
+        String name = sharedPref.getString(getString(R.string.name), "");
+        String password = sharedPref.getString(getString(R.string.password), "");
+
+        mRegisterName.setText(name);
+        mRegisterPassword.setText(password);
+
+        if (checkbox.equals("True")){
+            mCheckBox.setChecked(true);
+        } else {
+            mCheckBox.setChecked(false);
+        }
     }
 
     private void registerUser() {
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -99,10 +156,10 @@ public class RegisterDoctor extends AppCompatActivity {
                             //create a map to upload the new values
                             // map is a data structure with a key and a value
                             Map<String, Object> map = new HashMap<>();
-                            map.put("name", name);
-                            map.put("hospital",hospital);
-                            map.put("email", email);
-                            map.put("password", password);
+                            map.put("name", mName);
+                            map.put("hospital",mHospital);
+                            map.put("email", mEmail);
+                            map.put("password", mPassword);
 
                             String id = mAuth.getCurrentUser().getUid();
 
