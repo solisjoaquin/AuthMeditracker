@@ -1,16 +1,14 @@
 package com.example.authbeta;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,24 +18,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The RegisterDoctor class initializes user inputs, registration and login options.
+ * @author Joaquin Solis, Tanner Olson and Travis Stirling.
+ */
 public class RegisterDoctor extends AppCompatActivity {
 
     // Declare EditText variables: Name, Hospital, Email and Password.
-    private EditText mRegisterName = (EditText) findViewById(R.id.editTextRegisterName);
-    private EditText mRegisterEmail = (EditText) findViewById(R.id.editTextRegisterEmail);
-    private EditText mRegisterPassword = (EditText) findViewById(R.id.editTextRegisterPassword);
-    private EditText mRegisterHospital = (EditText) findViewById(R.id.editTextHospital);
-
-    // Declare Shared Preferences.
-    private SharedPreferences sharedPref;
-    private SharedPreferences.Editor sharedEditor;
-
-    // Declare Checkbox.
-    private CheckBox mCheckBox = (CheckBox) findViewById(R.id.editCheckBox);
-
-    // Declare Button variables.
-    private Button mRegisterBtn = (Button) findViewById(R.id.registerBtn);
-    private Button mToLoginButton = (Button) findViewById(R.id.toLoginBtn);
+    private EditText mRegisterName;
+    private EditText mRegisterEmail;
+    private EditText mRegisterPassword;
+    private EditText mRegisterHospital;
 
     // Declare Firebase authentication variable.
     private FirebaseAuth mAuth;
@@ -50,11 +41,29 @@ public class RegisterDoctor extends AppCompatActivity {
     private String mHospital;
     private String mEmail;
     private String mPassword;
+    private static String TAG = "RegisterDoctor";
 
+    /**
+     * Create the RegisterDoctor class and set the view of that activity.
+     * @param savedInstanceState Passes the state of the instance.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_doctor);
+
+        // Log onCreate with RegisterDoctor.
+        Log.d(TAG, "onCreate is working.");
+
+        // Set EditText variables: Name, Hospital, Email and Password.
+        mRegisterName = findViewById(R.id.editTextRegisterName);
+        mRegisterEmail = findViewById(R.id.editTextRegisterEmail);
+        mRegisterPassword = findViewById(R.id.editTextRegisterPassword);
+        mRegisterHospital = findViewById(R.id.editTextRegisterHospital);
+
+        // Declare Button variables.
+        Button mButtonRegister = findViewById(R.id.buttonRegister);
+        Button mButtonLogin = findViewById(R.id.buttonLogin);
 
         // Initialize instance of Firebase authentication.
         mAuth = FirebaseAuth.getInstance();
@@ -62,87 +71,62 @@ public class RegisterDoctor extends AppCompatActivity {
         // Initialize instance of Database.
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mRegisterBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // Log Firebase and Database have created instances.
+        Log.d(TAG, "Firebase and Database have instances.");
 
+        // This method occurs when the user clicks the Register button.
+        mButtonRegister.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Define what happens when the Register button is clicked.
+             * @param view The view of the activity.
+             */
+            @Override
+            public void onClick(View view) {
+
+                // Log initialization of ButtonRegister.
+                Log.d(TAG, "Register onClick working.");
+
+                // Set the values of Strings.
                 mName = mRegisterName.getText().toString();
                 mHospital = mRegisterHospital.getText().toString();
                 mEmail = mRegisterEmail.getText().toString();
                 mPassword = mRegisterPassword.getText().toString();
 
-                if (!mName.isEmpty() && !mEmail.isEmpty() && !mPassword.isEmpty() && !mHospital.isEmpty()){
+                // Validate all fields are not empty.
+                if (!mName.isEmpty() && !mEmail.isEmpty() && !mPassword.isEmpty() && !mHospital.isEmpty()) {
 
+                    // Validate password length.
                     if (mPassword.length() >= 6){
-
                         registerUser();
-
                     } else {
-                        Toast.makeText(RegisterDoctor.this, "The password need at least 6 characters", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterDoctor.this, "The password needs at least 6 characters", Toast.LENGTH_SHORT).show();
                     }
 
+                // If fields are empty.
                 } else {
-                    Toast.makeText(RegisterDoctor.this, "fill all fieds", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterDoctor.this, "Fields can not be empty", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
+        // This method occurs when the user clicks the Login button.
+        mButtonLogin.setOnClickListener(new View.OnClickListener() {
 
-
-        mToLoginButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Define what happens when the Login button is clicked.
+             * @param view The view of the activity.
+             */
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
+                // Log initialization of ButtonLogin.
+                Log.d(TAG, "Login onClick working.");
+
+                // startActivity will lead to the Login page.
                 startActivity(new Intent(RegisterDoctor.this, LoginDoctor.class));
             }
         });
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedEditor = sharedPref.edit();
-
-        checkSharedPreferences();
-
-        mToLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCheckBox.isChecked()) {
-                    sharedEditor.putString(getString(R.string.checkbox), "True");
-                    sharedEditor.commit();
-
-                    String name = mRegisterName.getText().toString();
-                    sharedEditor.putString(getString(R.string.name), name);
-                    sharedEditor.commit();
-
-                    String password = mRegisterPassword.getText().toString();
-                    sharedEditor.putString(getString(R.string.password), password);
-                    sharedEditor.commit();
-                } else {
-                    sharedEditor.putString(getString(R.string.checkbox), "False");
-                    sharedEditor.commit();
-
-                    sharedEditor.putString(getString(R.string.name), "");
-                    sharedEditor.commit();
-
-                    sharedEditor.putString(getString(R.string.password), "");
-                    sharedEditor.commit();
-                }
-            }
-        });
-    }
-
-    private void checkSharedPreferences() {
-        String checkbox = sharedPref.getString(getString(R.string.checkbox), "false");
-        String name = sharedPref.getString(getString(R.string.name), "");
-        String password = sharedPref.getString(getString(R.string.password), "");
-
-        mRegisterName.setText(name);
-        mRegisterPassword.setText(password);
-
-        if (checkbox.equals("True")){
-            mCheckBox.setChecked(true);
-        } else {
-            mCheckBox.setChecked(false);
-        }
     }
 
     private void registerUser() {

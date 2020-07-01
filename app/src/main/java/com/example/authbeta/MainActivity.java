@@ -3,27 +3,47 @@ package com.example.authbeta;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 /**
- * Creates the initial app activity and creates buttons for Doctor's and Patients.
+ * The MainActivity class creates buttons for Doctor's and Patients.
+ * @author Joaquin Solis, Tanner Olson and Travis Stirling.
  */
 public class MainActivity extends AppCompatActivity {
 
+    // Declare String variables.
+    private static String TAG = "MainActivity";
+
+    /**
+     * Create the MainActivity class and set the view of that activity.
+     * @param savedInstanceState Passes the state of the instance.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Declare buttons.
-        Button mBtnDoctor = (Button) findViewById(R.id.btnDoctor);
-        Button mBtnPatient = (Button) findViewById(R.id.btnPatient);
+        // Log onCreate with MainActivity.
+        Log.d(TAG, "onCreate is working.");
+
+        // Declare Button variables.
+        Button mButtonDoctor = findViewById(R.id.buttonDoctor);
+        Button mButtonPatient = findViewById(R.id.buttonPatient);
 
         // This method occurs when the user clicks the Doctor button.
-        mBtnDoctor.setOnClickListener(new View.OnClickListener() {
+        mButtonDoctor.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Define what happens when the Doctor button is clicked.
+             * @param view The view of the activity.
+             */
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
+                // Log initialization of ButtonDoctor.
+                Log.d(TAG, "Doctor onClick working.");
 
                 // startActivity will lead to the Doctor registration page.
                 startActivity(new Intent(MainActivity.this, RegisterDoctor.class));
@@ -31,9 +51,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // This method occurs when the user clicks the Patient button.
-        mBtnPatient.setOnClickListener(new View.OnClickListener() {
+        mButtonPatient.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Define what happens when the Patient button is clicked.
+             * @param view The view of the activity.
+             */
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
+                // Log initialization of ButtonPatient.
+                Log.d(TAG, "Patient onClick working.");
 
                 // startActivity will lead to the Patient registration page.
                 startActivity(new Intent(MainActivity.this, RegisterPatient.class));

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">AuthBeta</string>
-    <string name="checkbox">com.example.authbeta.checkbox</string>
-    <string name="name">com.example.authbeta.name</string>
-    <string name="password">com.example.authbeta.password</string>
+    <string name="buttonDoctor">Doctor</string>
+    <string name="buttonPatient">Patient</string>
+    <string name="buttonRegister">Register</string>
+    <string name="buttonLogin">Login</string>
+    <string name="editTextRegisterName">Full Name</string>
+    <string name="editTextRegisterHospital">Hospital Name</string>
+    <string name="editTextRegisterEmail">Email</string>
+    <string name="editTextRegisterPassword">Password</string>
 </resources>
