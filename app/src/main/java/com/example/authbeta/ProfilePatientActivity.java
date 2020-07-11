@@ -151,6 +151,7 @@ public class ProfilePatientActivity extends AppCompatActivity {
 
                 mAuth.signOut();
                 startActivity(new Intent(ProfilePatientActivity.this, RegisterPatient.class));
+                Toast.makeText(getApplicationContext(),"Bye!",Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -253,7 +254,7 @@ public class ProfilePatientActivity extends AppCompatActivity {
 
                 DataPoint dataPoint = new DataPoint(x,y);
                 mDatabase.child("Patients").child(id).child("ChartValues").child(id_data).setValue(dataPoint);
-                Toast.makeText(getApplicationContext(),"Thanks!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Thank you!",Toast.LENGTH_SHORT).show();
 
             }
         });
