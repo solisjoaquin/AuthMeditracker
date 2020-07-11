@@ -22,7 +22,9 @@ import java.util.Map;
 
 public class RegisterPatient extends AppCompatActivity {
 
+
     private FirebaseAuth mAuth;
+
     private DatabaseReference mDatatabe;
 
     private EditText mRegisterName, mRegisterEmail, mRegisterPsssword;

@@ -1,62 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:fillViewport="true">
 
-
-    <TextView
-        android:id="@+id/textViewNameProfile"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome Joaquin"
-        android:textColor="@android:color/black"
-        android:textSize="25dp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
 
-    <!--
-    <TextView
-        android:id="@+id/textViewEmailProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:layout_marginTop="5dp"/> -->
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your medical history"
-        android:layout_marginTop="10dp"/>
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
-        android:layout_width="match_parent"
-        android:layout_height="361dp"
-        android:layout_marginTop="5dp" />
-    
-
-
-        <Button
-            android:id="@+id/insert_Btn"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Insert values"
-            android:background="@android:color/holo_blue_dark"
-            android:textColor="@android:color/white"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            tools:context=".MainActivity">
 
-        <Button
-            android:id="@+id/btnLogOut"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LOG OUT"
-            android:background="@android:color/white"
-            android:textColor="@android:color/black"
-            style="?android:attr/borderlessButtonStyle"/>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/textViewNameProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome Joaquin"
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <!--
+            <TextView
+                android:id="@+id/textViewEmailProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:layout_marginTop="5dp"/> -->
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Your medical history"
+                android:gravity="center"
+                android:textStyle="bold"
+                />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="361dp"
+                android:layout_marginTop="5dp" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your daily report"
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:textStyle="bold"
+                android:text="Day Number (xValue)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                android:padding="10dp"
+                android:gravity="center_horizontal"
+                >
+                <Button
+                    android:id="@+id/minus_2_btn"
+                    android:text="-"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:background="@android:color/holo_blue_dark"
+                    android:textColor="@android:color/white"/>
+                <TextView
+                    android:id="@+id/edit_text2"
+                    android:text="5"
+                    android:padding="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/plus_2_btn"
+                    android:text="+"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/holo_blue_dark"
+                    android:textColor="@android:color/white"
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:textStyle="bold"
+                android:text="How do you feel today? (yValue)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                android:padding="10dp"
+                android:gravity="center_horizontal"
+                >
+                <Button
+                    android:id="@+id/minus_1_btn"
+                    android:text="-"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white"
+                    android:background="@android:color/holo_blue_dark"/>
+                <TextView
+                    android:id="@+id/edit_text1"
+                    android:text="5"
+                    android:padding="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/plus_1_btn"
+                    android:text="+"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/holo_blue_dark"
+                    android:textColor="@android:color/white"
+                    />
+
+            </LinearLayout>
+
+
+
+
+
+
+            <Button
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:id="@+id/insertValuesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/holo_blue_dark"
+                android:text="Insert values"
+                android:textColor="@android:color/white" />
+
+
+
+            <Button
+                android:id="@+id/btnLogOut"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="LOG OUT"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
+
+    </TableLayout>
+
+</ScrollView>

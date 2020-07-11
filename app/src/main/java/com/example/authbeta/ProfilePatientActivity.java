@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,10 +32,35 @@ public class ProfilePatientActivity extends AppCompatActivity {
 
     private TextView mUserName, mUserEmail;
     private Button mSignOutBtn;
+
     Button insert_btn;
+    TextView infoCounterTxt, dayCounterTxt;
+    Button minusBtn1, minusBtn2, plusBtn1, plusBtn2;
+    int counter1, counter2;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.minus_1_btn:
+                    minusCounter1();
+                    break;
+                case R.id.plus_1_btn:
+                    plusCounter1();
+                    break;
+                case R.id.minus_2_btn:
+                    minusCounter2();
+                    break;
+                case R.id.plus_2_btn:
+                    plusCounter2();
+                    break;
+            }
+
+        }
+    };
 
 
     // MPAndroidChart
@@ -67,6 +93,29 @@ public class ProfilePatientActivity extends AppCompatActivity {
         mUserName = (TextView) findViewById(R.id.textViewNameProfile);
         //mUserEmail= (TextView) findViewById(R.id.textViewEmailProfile);
         mSignOutBtn = (Button) findViewById(R.id.btnLogOut);
+
+        infoCounterTxt = findViewById(R.id.edit_text1);
+        dayCounterTxt = findViewById(R.id.edit_text2);
+
+        insert_btn = findViewById(R.id.insertValuesBtn);
+
+        minusBtn1 = findViewById(R.id.minus_1_btn);
+        minusBtn1.setOnClickListener(clickListener);
+
+        plusBtn1 = findViewById(R.id.plus_1_btn);
+        plusBtn1.setOnClickListener(clickListener);
+
+        minusBtn2 = findViewById(R.id.minus_2_btn);
+        minusBtn2.setOnClickListener(clickListener);
+
+        plusBtn2 = findViewById(R.id.plus_2_btn);
+        plusBtn2.setOnClickListener(clickListener);
+
+        initCounter();
+        initCounter2();
+
+        insertData();
+
 
         // connect the linechart with the layout
         lineChart = findViewById(R.id.lineChart);
@@ -189,6 +238,53 @@ public class ProfilePatientActivity extends AppCompatActivity {
         lineChart.setData(lineData);
         lineChart.invalidate();
 
+    }
+
+    private void insertData() {
+
+        final String id = mAuth.getCurrentUser().getUid();
+        insert_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id_data = mDatabase.child("Patients").child(id).child("ChartValues").push().getKey();
+                int x = Integer.parseInt(dayCounterTxt.getText().toString());
+                int y = Integer.parseInt(infoCounterTxt.getText().toString());
+
+
+                DataPoint dataPoint = new DataPoint(x,y);
+                mDatabase.child("Patients").child(id).child("ChartValues").child(id_data).setValue(dataPoint);
+                Toast.makeText(getApplicationContext(),"Thanks!",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void initCounter() {
+        counter1 = 5;
+        infoCounterTxt.setText(counter1 + "");
+    }
+
+    private void plusCounter1(){
+        counter1++;
+        infoCounterTxt.setText(counter1 + "");
+    }
+    private void minusCounter1(){
+        counter1--;
+        infoCounterTxt.setText(counter1 + "");
+    }
+
+    private void initCounter2() {
+        counter2 = 5;
+        dayCounterTxt.setText(counter2 + "");
+    }
+
+    private void plusCounter2(){
+        counter2++;
+        dayCounterTxt.setText(counter2 + "");
+    }
+    private void minusCounter2(){
+        counter2--;
+        dayCounterTxt.setText(counter2 + "");
     }
 
 
