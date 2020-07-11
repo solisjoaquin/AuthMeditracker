@@ -9,48 +9,62 @@
     android:padding="10dp"
     >
 
+    <TextView
+        android:layout_gravity="center"
+        android:layout_margin="?actionBarSize"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:text="Meditracker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
     <EditText
         android:id="@+id/editTextRegisterName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Full Name"
-        />
+        android:backgroundTint="@android:color/holo_blue_dark"/>
+
+    />
     <EditText
         android:id="@+id/editTextRegisterEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="email"/>
+        android:hint="email"
+        android:backgroundTint="@android:color/holo_blue_dark"/>
+    />
 
     <EditText
         android:id="@+id/editTextRegisterPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="password"/>
-
-    <LinearLayout
+        android:hint="password"
+        android:inputType="textPassword"
+        android:backgroundTint="@android:color/holo_blue_dark"/>
+    <Button
+        android:id="@+id/registerBtn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="bottom">
-        <Button
-            android:id="@+id/registerBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="REGISTER"
-            android:background="@color/colorAccent"
-            android:textColor="@android:color/white"/>
-        <Button
-            android:id="@+id/toLoginBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="I HAVE AN ACCOUNT"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"/>
+        android:layout_height="wrap_content"
+        android:text="REGISTER"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="15dp"/>
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/toLoginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="I HAVE AN ACCOUNT"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="10dp"
+        style="?android:attr/borderlessButtonStyle"/>
+
+
 
 
 
