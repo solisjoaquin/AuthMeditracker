@@ -33,12 +33,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         //this method occurs when the user clicks the Patient button
         mBtnPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RegisterPatient.class));
-
+                startActivity(new Intent(MainActivity.this,RegisterPatient.class));
             }
         });
     }
