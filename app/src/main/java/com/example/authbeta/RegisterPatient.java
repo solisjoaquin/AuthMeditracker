@@ -130,7 +130,7 @@ public class RegisterPatient extends AppCompatActivity {
         });
     }
 
-    /*
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -139,7 +139,7 @@ public class RegisterPatient extends AppCompatActivity {
             startActivity(new Intent(RegisterPatient.this, ProfilePatientActivity.class));
             finish();
         }
-    } */
+    } 
 
 
 
