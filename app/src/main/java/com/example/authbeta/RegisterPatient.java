@@ -1,16 +1,16 @@
 package com.example.authbeta;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,17 +24,19 @@ import java.util.Map;
 
 public class RegisterPatient extends AppCompatActivity {
 
-
+    // Declare Firebase Authorization variable.
     private FirebaseAuth mAuth;
 
-    private DatabaseReference mDatatabe;
+    // Declare Database variable.
+    private DatabaseReference mDatabase;
 
-    private EditText mRegisterName, mRegisterEmail, mRegisterPsssword;
-    private Button mRegisterBtn, mToLoginButton;
+    // Declare EditText variables.
+    private EditText mRegisterName, mRegisterEmail, mRegisterPassword;
 
-    private String name = "";
-    private String email  = "";
-    private String password = "";
+    // Declare String variables.
+    private String name;
+    private String email;
+    private String password;
 
 
     @Override
@@ -43,26 +45,26 @@ public class RegisterPatient extends AppCompatActivity {
         setContentView(R.layout.activity_register_patient);
 
 
-        mRegisterName = (EditText) findViewById(R.id.editTextRegisterName);
-        mRegisterEmail = (EditText) findViewById(R.id.editTextRegisterEmail);
-        mRegisterPsssword = (EditText) findViewById(R.id.editTextRegisterPassword);
+        mRegisterName = findViewById(R.id.editTextRegisterName);
+        mRegisterEmail = findViewById(R.id.editTextRegisterEmail);
+        mRegisterPassword = findViewById(R.id.editTextRegisterPassword);
 
-        mRegisterBtn = (Button) findViewById(R.id.registerBtn);
-        mToLoginButton = (Button) findViewById(R.id.toLoginBtn);
+        Button mRegisterButton = findViewById(R.id.registerBtn);
+        Button mLoginButton = findViewById(R.id.toLoginBtn);
 
-        // Initialize Firebase Auth
+        // Initialize Firebase Authorization.
         mAuth = FirebaseAuth.getInstance();
 
-        //get instance of Database
-        mDatatabe = FirebaseDatabase.getInstance().getReference();
+        // Get instance of Database.
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mRegisterBtn.setOnClickListener(new View.OnClickListener() {
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 name = mRegisterName.getText().toString();
                 email = mRegisterEmail.getText().toString();
-                password = mRegisterPsssword.getText().toString();
+                password = mRegisterPassword.getText().toString();
 
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()){
 
@@ -82,7 +84,7 @@ public class RegisterPatient extends AppCompatActivity {
         });
 
 
-        mToLoginButton.setOnClickListener(new View.OnClickListener() {
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterPatient.this, LoginUser.class));
@@ -94,6 +96,7 @@ public class RegisterPatient extends AppCompatActivity {
     private void registerUser(){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -108,7 +111,7 @@ public class RegisterPatient extends AppCompatActivity {
 
                     String id = mAuth.getCurrentUser().getUid();
 
-                    mDatatabe.child("Patients").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mDatabase.child("Patients").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task2) {
                             if (task2.isSuccessful()){
