@@ -119,7 +119,6 @@ public class ProfilePatientActivity extends AppCompatActivity {
 
         // connect the linechart with the layout
         lineChart = findViewById(R.id.lineChart);
-        /**insert_btn = findViewById(R.id.insert_Btn);*/
 
 
         // All this information is to set the format of the chart
@@ -158,15 +157,6 @@ public class ProfilePatientActivity extends AppCompatActivity {
 
         // After getting the user info, this method will call the info of the chart
         getUserInfo();
-
-        /**
-        insert_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ProfilePatientActivity.this, InsertValues.class));
-            }
-        }); */
-
 
 
 
@@ -287,6 +277,7 @@ public class ProfilePatientActivity extends AppCompatActivity {
         counter2--;
         dayCounterTxt.setText(counter2 + "");
     }
+
 
 
 }
