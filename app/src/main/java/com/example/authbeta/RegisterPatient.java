@@ -22,6 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is the main activity for the user and is a registration page. This
+ * activity also contains the ability to create a login if a new user.
+ * @author Joaquin Solis, Tanner Olson and Travis Stirling.
+ * @version 1.0
+ */
 public class RegisterPatient extends AppCompatActivity {
 
     // Declare Firebase Authorization variable.
@@ -39,6 +45,10 @@ public class RegisterPatient extends AppCompatActivity {
     private String password;
 
 
+    /**
+     * Create the MainActivity and set the view of that activity.
+     * @param savedInstanceState Pass the state of the instance.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +69,11 @@ public class RegisterPatient extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Create and validate the resitration of the user.
+             * @param v Pass the view.
+             */
             @Override
             public void onClick(View v) {
 
@@ -85,6 +100,10 @@ public class RegisterPatient extends AppCompatActivity {
 
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Create the LoginActivity if the user has an account.
+             * @param v Pass the view.
+             */
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterPatient.this, LoginUser.class));
@@ -93,10 +112,17 @@ public class RegisterPatient extends AppCompatActivity {
 
     }
 
+    /**
+     * Register the user and add that user to the Firebase Database.
+     */
     private void registerUser(){
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+            /*
+              Add the user to the Firebase Database.
+              @param task Pass the task authentication.
+             */
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -112,6 +138,11 @@ public class RegisterPatient extends AppCompatActivity {
                     String id = mAuth.getCurrentUser().getUid();
 
                     mDatabase.child("Patients").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                        /**
+                         * Start the ProfileActivity.
+                         * @param task2 Passes the task authentication.
+                         */
                         @Override
                         public void onComplete(@NonNull Task<Void> task2) {
                             if (task2.isSuccessful()){
@@ -133,7 +164,9 @@ public class RegisterPatient extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Start the ProfileActivity if the user has already registered.
+     */
     @Override
     protected void onStart() {
         super.onStart();
