@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true" >
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="1">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             tools:context=".MainActivity">
-            <!--
-            android:padding="10dp" -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -25,37 +25,25 @@
                 android:background="@android:color/holo_blue_dark">
 
                 <TextView
-
                     android:id="@+id/textViewNameProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Welcome"
+                    android:text="@string/welcome"
                     android:textColor="@android:color/white"
                     android:textSize="25dp"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
                     android:layout_margin="10dp"
-                    android:padding="10dp"/>
+                    android:padding="10dp" />
             </LinearLayout>
-
-
-            <!--
-            <TextView
-                android:id="@+id/textViewEmailProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:layout_marginTop="5dp"/> -->
-
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Your medical history"
+                android:text="@string/history"
                 android:gravity="center"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
@@ -63,103 +51,98 @@
                 android:layout_height="361dp"
                 android:layout_marginTop="5dp" />
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your daily report"
+                android:text="@string/report"
                 android:textColor="@android:color/black"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" />
+
             <TextView
                 android:textStyle="bold"
-                android:text="Day Number (xValue)"
+                android:text="@string/day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:gravity="center"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:ignore="MissingConstraints"
                 android:padding="10dp"
-                android:gravity="center_horizontal"
-                >
+                android:gravity="center_horizontal" >
+
                 <Button
                     android:id="@+id/minus_2_btn"
-                    android:text="-"
+                    android:text="@string/minus"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:background="@android:color/holo_blue_dark"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
+
                 <TextView
                     android:id="@+id/edit_text2"
-                    android:text="5"
+                    android:text="@string/five"
                     android:padding="15dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/plus_2_btn"
-                    android:text="+"
+                    android:text="@string/plus"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@android:color/holo_blue_dark"
-                    android:textColor="@android:color/white"
-                    />
-
+                    android:textColor="@android:color/white" />
             </LinearLayout>
-
 
             <TextView
                 android:textStyle="bold"
-                android:text="How do you feel today? (yValue)"
+                android:text="@string/scale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:gravity="center"/>
+                android:gravity="center" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:ignore="MissingConstraints"
                 android:padding="10dp"
-                android:gravity="center_horizontal"
-                >
+                android:gravity="center_horizontal" >
+
                 <Button
                     android:id="@+id/minus_1_btn"
-                    android:text="-"
+                    android:text="@string/minus"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@android:color/white"
-                    android:background="@android:color/holo_blue_dark"/>
+                    android:background="@android:color/holo_blue_dark" />
+
                 <TextView
                     android:id="@+id/edit_text1"
-                    android:text="5"
+                    android:text="@string/five"
                     android:padding="15dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/plus_1_btn"
-                    android:text="+"
+                    android:text="@string/plus"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@android:color/holo_blue_dark"
-                    android:textColor="@android:color/white"
-                    />
-
+                    android:textColor="@android:color/white" />
             </LinearLayout>
-
-
-
-
-
 
             <Button
                 android:layout_marginRight="50dp"
@@ -169,10 +152,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/holo_blue_dark"
-                android:text="Insert values"
+                android:text="@string/submit"
                 android:textColor="@android:color/white" />
-
-
 
             <Button
                 android:id="@+id/btnLogOut"
@@ -180,11 +161,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="LOG OUT"
+                android:text="@string/log_out"
                 android:textColor="@android:color/black" />
-
         </LinearLayout>
-
     </TableLayout>
-
 </ScrollView>

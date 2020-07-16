@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">AuthBeta</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="meditracker">MediTracker</string>
+    <string name="full_name">Full Name</string>
+    <string name="register">REGISTER</string>
+    <string name="account">I HAVE AN ACCOUNT</string>
+    <string name="welcome">Welcome</string>
+    <string name="history">Your Medical History</string>
+    <string name="report">Your Daily Report</string>
+    <string name="day">Day of the Month</string>
+    <string name="minus">-</string>
+    <string name="five">5</string>
+    <string name="plus">+</string>
+    <string name="scale">How Do You Feel?</string>
+    <string name="submit">Submit</string>
+    <string name="log_out">LOG OUT</string>
 </resources>

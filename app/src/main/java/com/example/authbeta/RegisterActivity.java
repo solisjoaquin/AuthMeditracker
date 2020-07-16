@@ -28,7 +28,7 @@ import java.util.Map;
  * @author Joaquin Solis, Tanner Olson and Travis Stirling.
  * @version 1.0
  */
-public class RegisterPatient extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     // Declare Firebase Authorization variable.
     private FirebaseAuth mAuth;
@@ -46,13 +46,13 @@ public class RegisterPatient extends AppCompatActivity {
 
 
     /**
-     * Create the MainActivity and set the view of that activity.
+     * Create the RegisterActivity and set the view of that activity.
      * @param savedInstanceState Pass the state of the instance.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_patient);
+        setContentView(R.layout.activity_register);
 
 
         mRegisterName = findViewById(R.id.editTextRegisterName);
@@ -88,11 +88,11 @@ public class RegisterPatient extends AppCompatActivity {
                         registerUser();
 
                     } else {
-                        Toast.makeText(RegisterPatient.this, "The password need at least 6 characters", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "The password need at least 6 characters", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(RegisterPatient.this, "fill all fieds", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "fill all fieds", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -106,7 +106,7 @@ public class RegisterPatient extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterPatient.this, LoginUser.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
@@ -116,6 +116,7 @@ public class RegisterPatient extends AppCompatActivity {
      * Register the user and add that user to the Firebase Database.
      */
     private void registerUser(){
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 
@@ -147,7 +148,7 @@ public class RegisterPatient extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task2) {
                             if (task2.isSuccessful()){
 
-                                startActivity(new Intent(RegisterPatient.this, ProfilePatientActivity.class));
+                                startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
                                 finish();
                             }
 
@@ -157,7 +158,7 @@ public class RegisterPatient extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(RegisterPatient.this, "There is a problem with register", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "There is a problem with register", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -172,7 +173,7 @@ public class RegisterPatient extends AppCompatActivity {
         super.onStart();
 
         if (mAuth.getCurrentUser() != null){
-            startActivity(new Intent(RegisterPatient.this, ProfilePatientActivity.class));
+            startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
             finish();
         }
     } 

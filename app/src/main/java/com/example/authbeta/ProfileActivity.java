@@ -2,7 +2,6 @@ package com.example.authbeta;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.solver.widgets.Snapshot;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ProfilePatientActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private TextView mUserName, mUserEmail;
     private Button mSignOutBtn;
@@ -85,7 +84,7 @@ public class ProfilePatientActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_patient);
+        setContentView(R.layout.activity_profile);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -149,7 +148,7 @@ public class ProfilePatientActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mAuth.signOut();
-                startActivity(new Intent(ProfilePatientActivity.this, RegisterPatient.class));
+                startActivity(new Intent(ProfileActivity.this, RegisterActivity.class));
                 Toast.makeText(getApplicationContext(),"Bye!",Toast.LENGTH_SHORT).show();
                 finish();
             }

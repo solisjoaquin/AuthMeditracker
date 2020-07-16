@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 //this is a new comment
-public class LoginUser extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private Button mLoginUserBtn;
     private EditText mLoginEmail, mLoginPassword;
@@ -31,7 +29,7 @@ public class LoginUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_patient);
+        setContentView(R.layout.activity_login);
 
 
 
@@ -55,7 +53,7 @@ public class LoginUser extends AppCompatActivity {
                     loginUser();
                 } else {
 
-                    Toast.makeText(LoginUser.this, "Fill all fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Fill all fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -69,11 +67,11 @@ public class LoginUser extends AppCompatActivity {
 
                 if (task.isSuccessful()){
 
-                    startActivity(new Intent(LoginUser.this, ProfilePatientActivity.class));
+                    startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
                     finish();
 
                 } else {
-                    Toast.makeText(LoginUser.this, "There is a problem to Login. Check your data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "There is a problem to Login. Check your data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
