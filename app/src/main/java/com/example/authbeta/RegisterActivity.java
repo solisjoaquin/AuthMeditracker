@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,9 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
  * This is the main activity for the user and is a registration page. This
  * activity also contains the ability to create a login if a new user.
+ *
  * @author Joaquin Solis, Tanner Olson and Travis Stirling.
  * @version 1.0
  */
@@ -47,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Create the RegisterActivity and set the view of that activity.
+     *
      * @param savedInstanceState Pass the state of the instance.
      */
     @Override
@@ -54,63 +56,70 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-
+        // Set the variables to the user input.
         mRegisterName = findViewById(R.id.editTextRegisterName);
         mRegisterEmail = findViewById(R.id.editTextRegisterEmail);
         mRegisterPassword = findViewById(R.id.editTextRegisterPassword);
-
-        Button mRegisterButton = findViewById(R.id.buttonRegister);
-        Button mLoginButton = findViewById(R.id.buttonAccount);
 
         // Initialize Firebase Authorization.
         mAuth = FirebaseAuth.getInstance();
 
         // Get instance of Database.
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        mRegisterButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * Create and validate the resitration of the user.
-             * @param v Pass the view.
-             */
-            @Override
-            public void onClick(View v) {
-
-                name = mRegisterName.getText().toString();
-                email = mRegisterEmail.getText().toString();
-                password = mRegisterPassword.getText().toString();
-
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()){
-
-                    if (password.length() >= 6){
-
-                        registerUser();
-
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "The password need at least 6 characters", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    Toast.makeText(RegisterActivity.this, "fill all fieds", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Create the LoginActivity if the user has an account.
-             * @param v Pass the view.
-             */
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-            }
-        });
-
     }
+
+
+    /**
+     * Validates that the user has filled out all fields and that their password
+     * is at least six digits.
+     *
+     * @param view Pass the view.
+     */
+    public void clickRegister(View view) {
+
+        // Set the values given by the user.
+        name = mRegisterName.getText().toString();
+        email = mRegisterEmail.getText().toString();
+        password = mRegisterPassword.getText().toString();
+
+        // Conditional statement to validate that all fields are not empty.
+        if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()){
+
+            // Conditional statement to validate password has at least six digits.
+            if (password.length() >= 6){
+
+                // Calls the method to Register the user.
+                registerUser();
+            } else {
+
+                // If password is less than six digits, notify user of minimum requirement.
+                Toast.makeText(RegisterActivity.this,
+                        "The password needs at least six characters.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+
+            // If some fields are empty, notify the user of minimum requirement.
+            Toast.makeText(RegisterActivity.this,
+                    "All field must be completed to register.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    /**
+     * Create the Login activity if the user selects 'I Have An Account'.
+     *
+     * @param view Pass the view.
+     */
+    public void clickAccount(View view) {
+
+        // Start the Login activity.
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
+        // Finish Register activity.
+        finish();
+    }
+
 
     /**
      * Register the user and add that user to the Firebase Database.
@@ -165,20 +174,23 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
     /**
-     * Start the ProfileActivity if the user has already registered.
+     * Validates the current user against the firebase database. If the user exists, start
+     * the Profile activity.
      */
     @Override
     protected void onStart() {
         super.onStart();
 
+        // Conditional statement to validate whether the user exists in database.
         if (mAuth.getCurrentUser() != null){
+
+            // If the user does exist, start the Profile activity.
             startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
+
+            // Finish Register activity.
             finish();
         }
     } 
-
-
-
-
 }
