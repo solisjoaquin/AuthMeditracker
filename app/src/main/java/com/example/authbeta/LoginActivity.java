@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 //this is a new comment
 public class LoginActivity extends AppCompatActivity {
 
-    private Button mLoginUserBtn;
     private EditText mLoginEmail, mLoginPassword;
 
     private String email  = "";
@@ -35,9 +34,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mLoginEmail = (EditText) findViewById(R.id.editTextLoginEmail);
-        mLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-        mLoginUserBtn = (Button) findViewById(R.id.loginButton);
+        mLoginEmail = findViewById(R.id.editTextLoginEmail);
+        mLoginPassword = findViewById(R.id.editTextLoginPassword);
+        Button mLoginUserBtn = findViewById(R.id.buttonLogin);
 
 
 

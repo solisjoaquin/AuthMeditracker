@@ -29,8 +29,7 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView mUserName, mUserEmail;
-    private Button mSignOutBtn;
+    private TextView mUserName;
 
     Button insert_btn;
     TextView infoCounterTxt, dayCounterTxt;
@@ -44,16 +43,16 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.minus_1_btn:
+                case R.id.buttonMinusScale:
                     minusCounter1();
                     break;
-                case R.id.plus_1_btn:
+                case R.id.buttonPlusScale:
                     plusCounter1();
                     break;
-                case R.id.minus_2_btn:
+                case R.id.buttonMinusFeel:
                     minusCounter2();
                     break;
-                case R.id.plus_2_btn:
+                case R.id.buttonPlusFeel:
                     plusCounter2();
                     break;
             }
@@ -89,25 +88,24 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mUserName = (TextView) findViewById(R.id.textViewNameProfile);
-        //mUserEmail= (TextView) findViewById(R.id.textViewEmailProfile);
-        mSignOutBtn = (Button) findViewById(R.id.btnLogOut);
+        mUserName = findViewById(R.id.textViewNameProfile);
+        Button mSignOutBtn = findViewById(R.id.buttonLogout);
 
-        infoCounterTxt = findViewById(R.id.edit_text1);
-        dayCounterTxt = findViewById(R.id.edit_text2);
+        infoCounterTxt = findViewById(R.id.textViewDayScale);
+        dayCounterTxt = findViewById(R.id.textViewFeelScale);
 
-        insert_btn = findViewById(R.id.insertValuesBtn);
+        insert_btn = findViewById(R.id.buttonSubmit);
 
-        minusBtn1 = findViewById(R.id.minus_1_btn);
+        minusBtn1 = findViewById(R.id.buttonMinusScale);
         minusBtn1.setOnClickListener(clickListener);
 
-        plusBtn1 = findViewById(R.id.plus_1_btn);
+        plusBtn1 = findViewById(R.id.buttonPlusScale);
         plusBtn1.setOnClickListener(clickListener);
 
-        minusBtn2 = findViewById(R.id.minus_2_btn);
+        minusBtn2 = findViewById(R.id.buttonMinusFeel);
         minusBtn2.setOnClickListener(clickListener);
 
-        plusBtn2 = findViewById(R.id.plus_2_btn);
+        plusBtn2 = findViewById(R.id.buttonPlusFeel);
         plusBtn2.setOnClickListener(clickListener);
 
         initCounter();
