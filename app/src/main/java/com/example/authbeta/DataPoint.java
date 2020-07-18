@@ -16,14 +16,10 @@ public class DataPoint {
 
     /**
      * This sets the x and y values for the line chart.
-     * @param xValue represents the x value.
-     * @param yValue represents the y value.
      */
-    public DataPoint(int xValue, int yValue) {
+    public DataPoint() {
 
-        // Set the values of x and y.
-        this.xValue = xValue;
-        this.yValue = yValue;
+        // Return the values of x and y.
     }
 
 
@@ -39,6 +35,17 @@ public class DataPoint {
 
 
     /**
+     * This sets the value of x.
+     * @param xValue integer representing the x value.
+     */
+    public void setxValue(int xValue) {
+
+        // Sets the xValue;
+        this.xValue = xValue;
+    }
+
+
+    /**
      * This returns the value of y.
      * @return returns the value of y.
      */
@@ -47,4 +54,16 @@ public class DataPoint {
         // Return the y value.
         return yValue;
     }
+
+
+    /**
+     * This sets the value of y.
+     * @param yValue integer representing the x value.
+     */
+    public void setyValue(int yValue) {
+
+        // Sets the xValue;
+        this.yValue = yValue;
+    }
+
 }

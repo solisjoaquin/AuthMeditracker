@@ -54,9 +54,10 @@ public class ProfileActivity extends AppCompatActivity {
     int dayCounter, feelCounter;
 
     // Declare Chart variables.
-    private LineChart lineChart;
-    private LineDataSet lineDataSet = new LineDataSet(null,null);
-    private ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+    LineChart lineChart;
+    LineData lineData;
+    LineDataSet lineDataSet = new LineDataSet(null, null);
+    ArrayList<ILineDataSet> iLineDataSet = new ArrayList<>();
 
 
     /**
@@ -90,7 +91,6 @@ public class ProfileActivity extends AppCompatActivity {
         lineChart.getDescription().setEnabled(false);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         lineDataSet.setDrawFilled(true);
-        lineDataSet.setLineWidth(4);
 
         // Set the format of the chart.
         YAxis yAxis = lineChart.getAxisLeft();
@@ -189,7 +189,6 @@ public class ProfileActivity extends AppCompatActivity {
                 } else {
 
                     // Clear and invalidate the line chart.
-                    lineChart.clear();
                     lineChart.invalidate();
                 }
             }
@@ -210,25 +209,22 @@ public class ProfileActivity extends AppCompatActivity {
     private void showChart(ArrayList<Entry> array) {
 
         // Creates a new line of data.
-        LineData lineData = new LineData(iLineDataSets);
-
-        // Sets the values in the new line of data.
         lineDataSet.setValues(array);
 
         // Labels the line data.
         lineDataSet.setLabel("Health Progress");
 
-        // Clears the array.
-        iLineDataSets.clear();
-
-        // Adds line data to the sets.
-        iLineDataSets.add(lineDataSet);
+        // Create a instance of LineData.
+        lineData = new LineData(lineDataSet);
 
         // Sets the data in the chart.
         lineChart.setData(lineData);
 
-        // Clears the chart.
-        lineChart.clear();
+        // Adds line data to the sets.
+        iLineDataSet.add(lineDataSet);
+
+        // Clears the array.
+        iLineDataSet.clear();
 
         // Invalidates the chart.
         lineChart.invalidate();
@@ -280,7 +276,11 @@ public class ProfileActivity extends AppCompatActivity {
         int y = Integer.parseInt(feelScale.getText().toString());
 
         // Creates a new DataPoint with values.
-        DataPoint dataPoint = new DataPoint(x, y);
+        DataPoint dataPoint = new DataPoint();
+
+        // Set x and y values.
+        dataPoint.setxValue(x);
+        dataPoint.setyValue(y);
 
         // Asserts that id_data is not null.
         assert id_data != null;
@@ -305,7 +305,7 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth.signOut();
 
         // Start the login activity as a redirect.
-        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+        startActivity(new Intent(ProfileActivity.this, RegisterActivity.class));
 
         // Toast notifying the user to 'Have a great day'.
         Toast.makeText(getApplicationContext(),"Have a great day!",Toast.LENGTH_SHORT).show();
