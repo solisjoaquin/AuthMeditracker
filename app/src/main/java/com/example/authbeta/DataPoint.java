@@ -10,7 +10,8 @@ package com.example.authbeta;
 public class DataPoint {
 
     // Declare Int variables.
-    int xValue, yValue;
+    int xValue;
+    int yValue;
 
 
     /**

@@ -3,12 +3,12 @@ package com.example.authbeta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,10 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mWelcome, dayScale, feelScale;
 
     // Declare Int variables.
-    private int dayCounter, feelCounter;
-
-    // Declare Button variables.
-    Button buttonMinusScale, buttonPlusScale, buttonMinusFeel, buttonPlusFeel;
+    int dayCounter, feelCounter;
 
     // Declare Chart variables.
     private LineChart lineChart;
@@ -83,12 +80,6 @@ public class ProfileActivity extends AppCompatActivity {
         mWelcome = findViewById(R.id.textViewNameProfile);
         dayScale = findViewById(R.id.textViewDayScale);
         feelScale = findViewById(R.id.textViewFeelScale);
-
-        // Initialize buttons.
-        buttonMinusScale = findViewById(R.id.buttonMinusScale);
-        buttonPlusScale = findViewById(R.id.buttonPlusScale);
-        buttonMinusFeel = findViewById(R.id.buttonMinusFeel);
-        buttonPlusFeel = findViewById(R.id.buttonPlusFeel);
 
         // Set values for integers.
         dayCounter = 5;
@@ -248,21 +239,22 @@ public class ProfileActivity extends AppCompatActivity {
      * Adds or Subtracts from the customers scale input.
      * @param view Pass the view.
      */
+    @SuppressLint("SetTextI18n")
     public void clickValue(View view) {
 
         // Run through cases to add or subtract counter.
         if (view.getId() == R.id.buttonMinusScale) {
             dayCounter--;
-            dayScale.setText(dayCounter);
+            dayScale.setText(dayCounter+"");
         } else if (view.getId() == R.id.buttonPlusScale) {
             dayCounter++;
-            dayScale.setText(dayCounter);
+            dayScale.setText(dayCounter+"");
         } else if (view.getId() == R.id.buttonMinusFeel) {
             feelCounter--;
-            feelScale.setText(feelCounter);
+            feelScale.setText(feelCounter+"");
         } else if (view.getId() == R.id.buttonPlusFeel) {
-                feelCounter++;
-                feelScale.setText(feelCounter);
+            feelCounter++;
+            feelScale.setText(feelCounter+"");
         }
     }
 
