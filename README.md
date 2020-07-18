@@ -1,11 +1,11 @@
-## This repository contains the authentication process with Firebase :grinning:
+# Update 12/07/2020
 
-To start using Firebase you need to log in with a google account at the right top. 
+The app has 3 active activities (doctor activities are blocked, not deleted yet):
 
-To connect with Firebase: TOOLS --> FIREBASE.
+*registerPatient
+*loginPatient
+*PatientProfile
 
-Select the last option FIRESTORE --> Read and Write Documents in Cloud Firestore --> Connect your app with Firebase
 
-If you want to see the java files. Click [here](https://github.com/solisjoaquin/AuthMeditracker/tree/master/app/src/main/java/com/example/authbeta).
 
-If you want to see the layouts files. Click [here](https://github.com/solisjoaquin/AuthMeditracker/tree/master/app/src/main/res/layout)
+
