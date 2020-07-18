@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,254 +28,289 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+
+/**
+ * This is the Profile activity for the user.
+ * This activity creates a chart for the user to easily digest their submissions.
+ * @author Joaquin Solis, Tanner Olson and Travis Stirling.
+ * @version 1.0
+ */
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView mUserName;
+    // Declare TAG for log.
+    private String TAG = "ProfileActivity";
 
-    Button insert_btn;
-    TextView infoCounterTxt, dayCounterTxt;
-    Button minusBtn1, minusBtn2, plusBtn1, plusBtn2;
-    int counter1, counter2;
-
+    // Declare Firebase Authorization variable.
     private FirebaseAuth mAuth;
+
+    // Declare FirebaseUser variable.
+    private FirebaseUser user;
+
+    // Declare Database variable.
     private DatabaseReference mDatabase;
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.buttonMinusScale:
-                    minusCounter1();
-                    break;
-                case R.id.buttonPlusScale:
-                    plusCounter1();
-                    break;
-                case R.id.buttonMinusFeel:
-                    minusCounter2();
-                    break;
-                case R.id.buttonPlusFeel:
-                    plusCounter2();
-                    break;
-            }
+    // Declare TextView variables.
+    private TextView mWelcome, dayScale, feelScale;
 
-        }
-    };
+    // Declare Int variables.
+    private int dayCounter, feelCounter;
+
+    // Declare Chart variables.
+    private LineChart lineChart;
+    private LineDataSet lineDataSet = new LineDataSet(null,null);
+    private ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
 
 
-    // MPAndroidChart
-    // 1. install dependencies on build.gradle (Module.app):
-    //       implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    // 2. write on the other build gradle file with the name of the project in the repositories part.
-
-    // allprojects {
-    //    repositories {
-    //        maven { url 'https://jitpack.io' }  <--- Add this line
-    //    }
-    //}
-
-    // Chart variables
-
-    LineChart lineChart;
-    LineDataSet lineDataSet = new LineDataSet(null,null);
-    ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
-    LineData lineData;
-
-
+    /**
+     * Create the ProfileActivity and set the content view of that activity.
+     * Create an instance of the Firebase authorization and the Firebase database.
+     * Set the variables for TextViews and Int.
+     * @param savedInstanceState Pass the state of the instance.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Initializes the Firebase authorization.
         mAuth = FirebaseAuth.getInstance();
+
+        // Sets the user variable with the current user.
+        user = mAuth.getCurrentUser();
+
+        // Gets the Database instance.
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mUserName = findViewById(R.id.textViewNameProfile);
-        Button mSignOutBtn = findViewById(R.id.buttonLogout);
+        // Set the values of the textViews.
+        mWelcome = findViewById(R.id.textViewNameProfile);
+        dayScale = findViewById(R.id.textViewDayScale);
+        feelScale = findViewById(R.id.textViewFeelScale);
 
-        infoCounterTxt = findViewById(R.id.textViewDayScale);
-        dayCounterTxt = findViewById(R.id.textViewFeelScale);
+        // Set values for integers.
+        dayCounter = 5;
+        feelCounter = 5;
 
-        insert_btn = findViewById(R.id.buttonSubmit);
-
-        minusBtn1 = findViewById(R.id.buttonMinusScale);
-        minusBtn1.setOnClickListener(clickListener);
-
-        plusBtn1 = findViewById(R.id.buttonPlusScale);
-        plusBtn1.setOnClickListener(clickListener);
-
-        minusBtn2 = findViewById(R.id.buttonMinusFeel);
-        minusBtn2.setOnClickListener(clickListener);
-
-        plusBtn2 = findViewById(R.id.buttonPlusFeel);
-        plusBtn2.setOnClickListener(clickListener);
-
-        initCounter();
-        initCounter2();
-
-        insertData();
-
-
-        // connect the linechart with the layout
+        // Connect the line chart with the layout and set  preferences.
         lineChart = findViewById(R.id.lineChart);
+        lineChart.getDescription().setEnabled(false);
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setLineWidth(4);
 
-
-        // All this information is to set the format of the chart
+        // Set the format of the chart.
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
         yAxis.setAxisMaximum(10f);
         yAxis.setGranularity(1f);
         yAxis.setTextColor(Color.BLUE);
-
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setTextColor(Color.BLUE);
         xAxis.setDrawLimitLinesBehindData(true);
-
         YAxis yAxis1 = lineChart.getAxisRight();
         yAxis1.setDrawLabels(false);
         yAxis1.setEnabled(false);
 
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        lineChart.getDescription().setEnabled(false);
-        //lineDataSet.setLineWidth(4);
-        lineDataSet.setDrawFilled(true);
-
-
-
-        mSignOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mAuth.signOut();
-                startActivity(new Intent(ProfileActivity.this, RegisterActivity.class));
-                Toast.makeText(getApplicationContext(),"Bye!",Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-
-        // After getting the user info, this method will call the info of the chart
-        getUserInfo();
-
-
-
+        // Call the getUser() method.
+        getUser();
     }
 
-    private void getUserInfo(){
 
-        String id = mAuth.getCurrentUser().getUid();
-        mDatabase.child("Patients").child(id).addValueEventListener(new ValueEventListener() {
+    /**
+     * Pulls user information from the database to display a welcome message.
+     * Initiates pulling user data from the database.
+     */
+    private void getUser() {
+
+        // Asserts that user is not null.
+        assert user != null;
+
+        // Get the values that were input into the database.
+        mDatabase.child("Patients").child(user.getUid())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
 
-                    String name = dataSnapshot.child("name").getValue().toString();
-                    //String email = dataSnapshot.child("email").getValue().toString();
+                // Set string value for welcome message.
+                String welcome = "Welcome " + dataSnapshot.child("name").getValue(String.class);
 
-                    mUserName.setText("Welcome "+ name);
-                    //mUserEmail.setText(email);
+                // Sets the textView value to the welcome message.
+                mWelcome.setText(welcome);
 
-                    retrieveData();
-
-
-                }
+                // Retrieves previously stored data.
+                getData();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                // Create an error log if not able to retrieve data from database.
+                Log.w(TAG, "Failed to read value.");
             }
         });
     }
 
-    // this method is to retrieve the info for the database
-    private void retrieveData() {
-        String id = mAuth.getCurrentUser().getUid();
-        mDatabase.child("Patients").child(id).child("ChartValues").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Entry> dataVals = new ArrayList<Entry>();
 
-                if(snapshot.hasChildren()){
-                    for(DataSnapshot myDataSnapshot : snapshot.getChildren()){
+    /**
+     * Retrieves the data and adds it to the layout.
+     */
+    private void getData() {
+
+        // Asserts that user is not null.
+        assert user != null;
+
+        // Get the values that were input into the database.
+        mDatabase.child("Patients").child(user.getUid()).child("ChartValues")
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                // Create a new array to hold the data.
+                ArrayList<Entry> array = new ArrayList<>();
+
+                // If the data has children, get the x and y value.
+                if (dataSnapshot.hasChildren()) {
+
+                    // Loop through all the children.
+                    for (DataSnapshot myDataSnapshot : dataSnapshot.getChildren()) {
+
+                        // Get the values of the DataPoint.
                         DataPoint dataPoint = myDataSnapshot.getValue(DataPoint.class);
-                        dataVals.add(new Entry(dataPoint.getxValue(), dataPoint.getyValue()));
+
+                        // Asserts that dataPoint is not null.
+                        assert dataPoint != null;
+
+                        // Add the values of the DataPoint to the array.
+                        array.add(new Entry(dataPoint.getxValue(), dataPoint.getyValue()));
                     }
 
-
-                    showChart(dataVals);
+                    // Call the showChart() method.
+                    showChart(array);
                 } else {
+
+                    // Clear and invalidate the line chart.
                     lineChart.clear();
                     lineChart.invalidate();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+                // Create an error log if not able to retrieve data from database.
+                Log.w(TAG, "Failed to get the values of the array.");
             }
         });
     }
 
-    // this method is to show the chart. setting the correct elements with the retrieve data
-    private void showChart(ArrayList<Entry> dataVals){
-        lineDataSet.setValues(dataVals);
-        lineDataSet.setLabel("DataSet 1");
+
+    /**
+     * Creates the chart and sets preferences for the information.
+     * @param array Passes and array of x/y values.
+     */
+    private void showChart(ArrayList<Entry> array) {
+
+        // Creates a new line of data.
+        LineData lineData = new LineData(iLineDataSets);
+
+        // Sets the values in the new line of data.
+        lineDataSet.setValues(array);
+
+        // Labels the line data.
+        lineDataSet.setLabel("Health Progress");
+
+        // Clears the array.
         iLineDataSets.clear();
+
+        // Adds line data to the sets.
         iLineDataSets.add(lineDataSet);
-        lineData = new LineData(iLineDataSets);
-        lineChart.clear();
+
+        // Sets the data in the chart.
         lineChart.setData(lineData);
+
+        // Clears the chart.
+        lineChart.clear();
+
+        // Invalidates the chart.
         lineChart.invalidate();
-
-    }
-
-    private void insertData() {
-
-        final String id = mAuth.getCurrentUser().getUid();
-        insert_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id_data = mDatabase.child("Patients").child(id).child("ChartValues").push().getKey();
-                int x = Integer.parseInt(dayCounterTxt.getText().toString());
-                int y = Integer.parseInt(infoCounterTxt.getText().toString());
-
-
-                DataPoint dataPoint = new DataPoint(x,y);
-                mDatabase.child("Patients").child(id).child("ChartValues").child(id_data).setValue(dataPoint);
-                Toast.makeText(getApplicationContext(),"Thank you!",Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-
-    private void initCounter() {
-        counter1 = 5;
-        infoCounterTxt.setText(counter1 + "");
-    }
-
-    private void plusCounter1(){
-        counter1++;
-        infoCounterTxt.setText(counter1 + "");
-    }
-    private void minusCounter1(){
-        counter1--;
-        infoCounterTxt.setText(counter1 + "");
-    }
-
-    private void initCounter2() {
-        counter2 = 5;
-        dayCounterTxt.setText(counter2 + "");
-    }
-
-    private void plusCounter2(){
-        counter2++;
-        dayCounterTxt.setText(counter2 + "");
-    }
-    private void minusCounter2(){
-        counter2--;
-        dayCounterTxt.setText(counter2 + "");
     }
 
 
+    /**
+     * Adds or Subtracts from the customers scale input.
+     * @param view Pass the view.
+     */
+    public void clickValue(View view) {
 
+        // Run through cases to add or subtract counter.
+        switch (view.getId()) {
+            case R.id.buttonMinusScale:
+                dayCounter--;
+                dayScale.setText(dayCounter);
+                break;
+            case R.id.buttonPlusScale:
+                dayCounter++;
+                dayScale.setText(dayCounter);
+                break;
+            case R.id.buttonMinusFeel:
+                feelCounter--;
+                feelScale.setText(feelCounter);
+                break;
+            case R.id.buttonPlusFeel:
+                feelCounter++;
+                feelScale.setText(feelCounter);
+                break;
+        }
+    }
+
+
+    /**
+     * Submits the day and scale values to the database.
+     * @param view Pass the view.
+     */
+    public void clickSubmit(View view) {
+
+        // Asserts that user is not null.
+        assert user != null;
+
+        // Get the identification for the data.
+        String id_data = mDatabase.child("Patients").child(user.getUid()).child("ChartValues")
+                .push().getKey();
+
+        // Get the integer from the dayScale and feelScale.
+        int x = Integer.parseInt(dayScale.getText().toString());
+        int y = Integer.parseInt(feelScale.getText().toString());
+
+        // Creates a new DataPoint with values.
+        DataPoint dataPoint = new DataPoint(x, y);
+
+        // Asserts that id_data is not null.
+        assert id_data != null;
+
+        // Inserts data into database.
+        mDatabase.child("Patients").child(user.getUid()).child("ChartValues").child(id_data)
+                .setValue(dataPoint);
+
+        // Thank the user for their submission.
+        Toast.makeText(getApplicationContext(),"Thank you for your submission!",
+                Toast.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * Logs the user out of the app and returns them to the login page.
+     * @param view Pass the view.
+     */
+    public void clickLogout(View view) {
+
+        // Logs the user out of firebase.
+        mAuth.signOut();
+
+        // Start the login activity as a redirect.
+        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+
+        // Toast notifying the user to 'Have a great day'.
+        Toast.makeText(getApplicationContext(),"Have a great day!",Toast.LENGTH_SHORT).show();
+
+        // Finishes the current activity.
+        finish();
+    }
 }

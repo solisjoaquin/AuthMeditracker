@@ -49,6 +49,7 @@
         android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="clickLogin"
         android:text="@string/sign_in"
         android:background="@android:color/holo_blue_dark"
         android:textColor="@android:color/white"
