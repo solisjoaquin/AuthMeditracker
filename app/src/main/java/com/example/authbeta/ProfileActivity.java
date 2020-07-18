@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,9 +44,6 @@ public class ProfileActivity extends AppCompatActivity {
     // Declare Firebase Authorization variable.
     private FirebaseAuth mAuth;
 
-    // Declare FirebaseUser variable.
-    private FirebaseUser user;
-
     // Declare Database variable.
     private DatabaseReference mDatabase;
 
@@ -54,6 +52,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     // Declare Int variables.
     private int dayCounter, feelCounter;
+
+    // Declare Button variables.
+    Button buttonMinusScale, buttonPlusScale, buttonMinusFeel, buttonPlusFeel;
 
     // Declare Chart variables.
     private LineChart lineChart;
@@ -75,9 +76,6 @@ public class ProfileActivity extends AppCompatActivity {
         // Initializes the Firebase authorization.
         mAuth = FirebaseAuth.getInstance();
 
-        // Sets the user variable with the current user.
-        user = mAuth.getCurrentUser();
-
         // Gets the Database instance.
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -85,6 +83,12 @@ public class ProfileActivity extends AppCompatActivity {
         mWelcome = findViewById(R.id.textViewNameProfile);
         dayScale = findViewById(R.id.textViewDayScale);
         feelScale = findViewById(R.id.textViewFeelScale);
+
+        // Initialize buttons.
+        buttonMinusScale = findViewById(R.id.buttonMinusScale);
+        buttonPlusScale = findViewById(R.id.buttonPlusScale);
+        buttonMinusFeel = findViewById(R.id.buttonMinusFeel);
+        buttonPlusFeel = findViewById(R.id.buttonPlusFeel);
 
         // Set values for integers.
         dayCounter = 5;
@@ -122,6 +126,9 @@ public class ProfileActivity extends AppCompatActivity {
      */
     private void getUser() {
 
+        // Get current user.
+        FirebaseUser user = mAuth.getCurrentUser();
+
         // Asserts that user is not null.
         assert user != null;
 
@@ -154,6 +161,9 @@ public class ProfileActivity extends AppCompatActivity {
      * Retrieves the data and adds it to the layout.
      */
     private void getData() {
+
+        // Get current user.
+        FirebaseUser user = mAuth.getCurrentUser();
 
         // Asserts that user is not null.
         assert user != null;
@@ -241,23 +251,18 @@ public class ProfileActivity extends AppCompatActivity {
     public void clickValue(View view) {
 
         // Run through cases to add or subtract counter.
-        switch (view.getId()) {
-            case R.id.buttonMinusScale:
-                dayCounter--;
-                dayScale.setText(dayCounter);
-                break;
-            case R.id.buttonPlusScale:
-                dayCounter++;
-                dayScale.setText(dayCounter);
-                break;
-            case R.id.buttonMinusFeel:
-                feelCounter--;
-                feelScale.setText(feelCounter);
-                break;
-            case R.id.buttonPlusFeel:
+        if (view.getId() == R.id.buttonMinusScale) {
+            dayCounter--;
+            dayScale.setText(dayCounter);
+        } else if (view.getId() == R.id.buttonPlusScale) {
+            dayCounter++;
+            dayScale.setText(dayCounter);
+        } else if (view.getId() == R.id.buttonMinusFeel) {
+            feelCounter--;
+            feelScale.setText(feelCounter);
+        } else if (view.getId() == R.id.buttonPlusFeel) {
                 feelCounter++;
                 feelScale.setText(feelCounter);
-                break;
         }
     }
 
@@ -267,6 +272,9 @@ public class ProfileActivity extends AppCompatActivity {
      * @param view Pass the view.
      */
     public void clickSubmit(View view) {
+
+        // Get current user.
+        FirebaseUser user = mAuth.getCurrentUser();
 
         // Asserts that user is not null.
         assert user != null;

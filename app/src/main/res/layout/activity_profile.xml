@@ -68,15 +68,15 @@
 
         <Button
             android:id="@+id/buttonMinusScale"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_height="50dp"
             android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_blue_dark"
             android:onClick="clickValue"
             android:text="@string/minus"
             android:textColor="@android:color/white"
             app:layout_constraintBaseline_toBaselineOf="@+id/textViewDayScale"
             app:layout_constraintEnd_toStartOf="@+id/textViewDayScale"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textViewDayScale"
@@ -90,15 +90,15 @@
 
         <Button
             android:id="@+id/buttonPlusScale"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_height="50dp"
             android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_blue_dark"
             android:onClick="clickValue"
             android:text="@string/plus"
             android:textColor="@android:color/white"
             app:layout_constraintBaseline_toBaselineOf="@+id/textViewDayScale"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewDayScale"/>
+            app:layout_constraintStart_toEndOf="@+id/textViewDayScale" />
 
         <TextView
             android:id="@+id/textViewFeel"
@@ -114,15 +114,15 @@
 
         <Button
             android:id="@+id/buttonMinusFeel"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_height="50dp"
             android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_blue_dark"
             android:onClick="clickValue"
             android:text="@string/minus"
             android:textColor="@android:color/white"
             app:layout_constraintBaseline_toBaselineOf="@+id/textViewFeelScale"
             app:layout_constraintEnd_toStartOf="@+id/textViewFeelScale"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textViewFeelScale"
@@ -136,15 +136,15 @@
 
         <Button
             android:id="@+id/buttonPlusFeel"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_height="50dp"
             android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_blue_dark"
             android:onClick="clickValue"
             android:text="@string/plus"
             android:textColor="@android:color/white"
             app:layout_constraintBaseline_toBaselineOf="@+id/textViewFeelScale"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewFeelScale"/>
+            app:layout_constraintStart_toEndOf="@+id/textViewFeelScale" />
 
         <Button
             android:id="@+id/buttonSubmit"

@@ -36,9 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
     // Declare Firebase Authorization variable.
     private FirebaseAuth mAuth;
 
-    // Declare FirebaseUser variable.
-    private FirebaseUser user;
-
     // Declare Database variable.
     private DatabaseReference mDatabase;
 
@@ -63,9 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
         // Initializes the Firebase authorization.
         mAuth = FirebaseAuth.getInstance();
 
-        // Sets the user variable with the current user.
-        user = mAuth.getCurrentUser();
-
         // Gets the Database instance.
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -85,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStart();
 
         // Conditional statement to validate whether the user exists in database.
-        if (user != null) {
+        if (mAuth.getCurrentUser() != null) {
 
             // If the user does exist, start the Profile activity.
             startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
@@ -156,6 +150,9 @@ public class RegisterActivity extends AppCompatActivity {
                     map.put("name", name);
                     map.put("email", email);
                     map.put("password", password);
+
+                    // Get current user.
+                    FirebaseUser user = mAuth.getCurrentUser();
 
                     // Assert that user is not null.
                     assert user != null;
